@@ -1,0 +1,99 @@
+Get prepared
+1. Create file index.js
+2. In the terminal, run:
+    npm init -y
+review package.json
+
+_______________________________________________________
+Exercise 1: Install Express Server
+1. In the terminal run:
+    npm install express
+
+Open package.json, notice the change under "dependencies".
+Explore the created folders and files.
+*** Note: never edit anything in node_modules, or package-lock.json! ***
+2. Set Git to ignore node_modues
+In the terminal, run:
+    touch ~/.gitignore_global
+    open .gitignore_global add: node_modules
+    git config --global core.excludesfile ~/.gitignore_global
+
+_______________________________________________________
+Exercise 2: Set a port for the Express server
+1. In index.js, import express using require()
+2. Create an Express object by calling express() and assign it a variable: app.
+3. Using the listen() method, set the server's port to 3000
+Inside the callback arrow function, console log "The server is running on port 3000..."
+4. Create an environment variable for the port: port 
+Set its value to: process.env.PORT or 3000.
+Edit the .listen method to use the port variable.
+5. Run index.js in the terminal to check for errors.
+
+_______________________________________________________
+Exercise 3: Routing with Express
+1. Create a home route using the get() method
+2. Set the route name to '/'
+3. Inside the callback function: 
+pass a string to res.send() "Welcome to my API home page!"
+Console log "GET request received on home route"
+4. In the terminal, stop the server with control+c. Run index.js again to restart the server.
+5. In your web browser, navigate to http://localhost:3000/ to check the output.
+
+........
+Exercise 3 part 2: install nodemon auto-run tool
+1. Stop the server and run this command in terminal:
+    npm install nodemon --save-dev
+2. Look in package.json, notice there are now dev dependencies.
+3. Disable VScode autosave, click "file" then "autosave".
+4. In package.json, edit "scripts":
+"start" : "nodemon index.js"
+5. In the terminal, run:
+    npm start
+
+_______________________________________________________
+Exercise 4: Create a subroute 
+1. In index.js, use the .get() method to create a new route: message
+Set the route name to '/message'
+2. Inside the callback function:
+Pass a string to .send() "Surprise! I am a ninja."
+Console log "GET request received on message route"
+3. In the terminal, check to make sure nodemon restarted the server.
+4. In your web browser, navigate to http://localhost:3000/message to check the output.
+
+_______________________________________________________
+Exercise 5: Create a dynamic route to accept POST requests
+1. In index.js, use the .post() method to create a new dynamic route
+Set the route name to '/message/:secret'
+2. Inside the callback function:
+Pass the below object to .json() 
+{ secret: "Message received: " + req.params.secret }
+Console log "Secret message received by POST request"
+3. In the terminal, stop the server with control+c
+Install cors with this command:
+npm install cors
+4. In index.js, at the top of the file, import cors
+Use the use() method to run cors() as middleware.
+5. Save index.js and run npm start in the terminal.
+6. Find index.html in the public folder. Open it with Live Server.
+Type a message in the input and check the server response. 
+
+
+______________________________________________________
+Group Activity
+Additional API tools
+1. Install Postman from https://www.postman.com/
+2. Create an account and get set up.
+3. Follow your instructor's demo to test the routes you made today in class.
+
+_______________________________________________________
+Practice session
+1. In users.js, export the users array
+2. In index.js, import users
+3. Console log users to check the that export and import worked, and to examine the data structure.
+4. Create a dynamic route, users, to accept GET requests based on the parameter: userId
+Have the server return the name and age of the person based on the submitted id.
+*Hint, remember that you're simply working with json containing an array of objects, 
+so, inside your callback function, use the typical JS syntax and/or methods to get the data.
+Feel free to look up the code you will need.
+5. Use Postman to check the route.
+6. Submit a screenshot of the results on Postman.

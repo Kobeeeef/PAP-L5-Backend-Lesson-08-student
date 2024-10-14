@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secret Message</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <style>
+        html {
+            height: 100%
+        }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            text-align: center;
+            font-size: 100%;
+            color: white;
+            background-image: url('./winged-letter.jpg');
+            background-size: 100px;
+            background-repeat: repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        body>main {
+            margin: 3rem auto;
+            padding: 3rem 4rem;
+            width: 600px;
+            border-radius: 20px;
+            background-color: #0a2a48;
+        }
+
+        p#secret {
+            font-style: italic;
+            color: #daa041;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <h1>Send a Secret Message</h1>
+        <form>
+            <label for="message">Type your message</label>
+            <input id="message" type="text">
+            <input type="submit" value="send">
+        </form>
+    </main>
+    <script>
+        const form = document.querySelector('form');
+        const main = document.querySelector('main');
+        const api = "http://localhost:3000/message/";
+
+
+        const params = {
+            method: 'POST'
+        }
+
+        function showMessage(secret) {
+            if (main.querySelector('#secret') !== null) {
+                document.querySelector('#secret').remove();
+            }
+            const secretContainer = document.createElement('p');
+            secretContainer.id = "secret";
+            secretContainer.textContent = secret;
+            main.appendChild(secretContainer);
+        }
+
+        async function sendMessage(message) {
+            console.log(api + message);
+            try {
+                let response = await fetch(api + message, params);
+                console.log(response);
+                let secret = await response.json();
+                showMessage(secret.secret);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        function formData(e) {
+            e.preventDefault();
+            let message = document.querySelector('#message').value;
+            //console.log(message);
+            sendMessage(message);
+        }
+
+        form.addEventListener('submit', formData);
+    </script>
+</body>
+
+</html>
