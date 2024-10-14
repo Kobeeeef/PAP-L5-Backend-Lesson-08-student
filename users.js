@@ -21,4 +21,4 @@ const users = [
     }
 ]
 
-// Practice Session
+module.exports = users;
